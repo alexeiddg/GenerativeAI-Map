@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'com.netflix.dgs.codegen' version '6.2.1'
+    id 'org.graalvm.buildtools.native' version '0.10.2'
+}
+
+group = 'com.alexeiddg'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework:spring-webflux'
+    testImplementation 'org.springframework.graphql:spring-graphql-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+generateJava {
+    schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
+    packageName = 'com.alexeiddg.backend.codegen'
+    generateClient = true
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
