@@ -7,6 +7,9 @@ build/
 !**/src/test/**/build/
 src/main/resources/application.properties
 /src/main/resources/application.properties
+libs
+libs/**
+webpage_content.txt
 
 ### STS ###
 .apt_generated

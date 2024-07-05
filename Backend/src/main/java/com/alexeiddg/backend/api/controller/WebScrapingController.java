@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import com.alexeiddg.backend.scraper.utils.AITool;
+
 @RestController
 @RequestMapping("/api/scrape")
 public class WebScrapingController {
@@ -20,7 +22,7 @@ public class WebScrapingController {
     }
 
     @GetMapping
-    public List<String> scrape() {
+    public List<AITool> scrape() {
         return webScrapingService.scrapeWebsite();
     }
 }
