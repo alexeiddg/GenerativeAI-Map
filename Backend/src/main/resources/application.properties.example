@@ -1,0 +1,6 @@
+# This is an example file for the configuration of the application when generating the spring boot application
+spring.application.name=backend
+
+# For the web scraper add the chrome and chromedriver paths
+webdriver.chrome.driver=YOUR_PATH_TO_CHROMEDRIVER
+webdriver.chrome.binary=YOUR_PATH_TO_CHROME

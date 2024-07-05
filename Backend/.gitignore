@@ -1,9 +1,12 @@
 HELP.md
 .gradle
+selenium-java-4.22.0
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+src/main/resources/application.properties
+/src/main/resources/application.properties
 
 ### STS ###
 .apt_generated
