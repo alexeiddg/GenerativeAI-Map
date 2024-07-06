@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -22,6 +23,9 @@ public class WebScrapingService {
     private final WebDriver webDriver;
     private final HtmlParser htmlParser;
 
+    @Value("${website.url}")
+    private String websiteUrl;
+
     @Autowired
     public WebScrapingService(WebDriver webDriver, HtmlParser htmlParser) {
         this.webDriver = webDriver;
@@ -32,7 +36,7 @@ public class WebScrapingService {
         List<AITool> aiTools = null;
 
         try {
-            webDriver.get("https://www.aixploria.com/en/ultimate-list-ai/");
+            webDriver.get(websiteUrl);
 
             WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(90));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("body")));
@@ -51,5 +55,3 @@ public class WebScrapingService {
         return aiTools;
     }
 }
-
-

@@ -1,20 +1,18 @@
 package com.alexeiddg.backend.scraper.utils;
 
-import java.util.List;
-
 public class AITool {
     private String name;
     private String description;
     private String url;
     private String rating;
-    private List<String> categories;
+    private String category;
 
-    public AITool(String name, String description, String url, String rating, List<String> categories) {
+    public AITool(String name, String description, String url, String rating, String category) {
         this.name = name;
         this.description = description;
         this.url = url;
         this.rating = rating;
-        this.categories = categories;
+        this.category = category;
     }
 
     public String getName() { return name; }
@@ -29,7 +27,6 @@ public class AITool {
     public String getRating() { return rating; }
     public void setRating(String rating) { this.rating = rating; }
 
-    public List<String> getCategories() { return categories; }
-    public void setCategories(List<String> categories) { this.categories = categories; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 }
-

@@ -6,10 +6,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import com.alexeiddg.backend.scraper.utils.AITool;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.alexeiddg.backend.scraper.utils.AITool;
 
 @Service
 public class HtmlParser {
@@ -18,20 +18,21 @@ public class HtmlParser {
         List<AITool> aiTools = new ArrayList<>();
         Document document = Jsoup.parse(html);
 
-        Elements toolElements = document.select("div.post-item");
+        // Select the grid items that contain AI tools
+        Elements toolElements = document.select("div.grid-item div.blog-list ol li");
+
         for (Element toolElement : toolElements) {
-            String name = toolElement.select("a.dark-title").text();
-            String description = toolElement.select("p.post-excerpt").text();
-            String url = toolElement.select("a.dark-title").attr("href");
+            String name = toolElement.select("a.tooltips").text();
+
+            // Currently fetches the internal URL of the tool and not the public URL
+            String url = toolElement.select("a.tooltips").attr("href");
+
+            // Currently does not fetch these fields
+            String description = toolElement.select("a.tooltips").attr("title");
             String rating = toolElement.select("div.kksr-legend").text();
-            Elements categories = toolElement.select("span.post-category a");
-            List<String> categoryList = new ArrayList<>();
+            String category = toolElement.select("span.hashtaga").text();
 
-            for (Element category : categories) {
-                categoryList.add(category.text());
-            }
-
-            aiTools.add(new AITool(name, description, url, rating, categoryList));
+            aiTools.add(new AITool(name, description, url, rating, category));
         }
 
         return aiTools;
