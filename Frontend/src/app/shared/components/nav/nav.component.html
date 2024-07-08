@@ -1,13 +1,18 @@
-<nav class="flex w-full h-16 bg-zinc-900 text-white mx-auto items-center text-lg shadow-md">
+<nav class="flex w-full bg-zinc-900 text-white mx-auto items-center shadow-md">
     <div class="p-4 mx-8">
-        <h2 class="font-semibold">The Generative AI Map</h2>
+        <h2 class="font-semibold text-md">The Generative AI Map</h2>
     </div>
-    <div class="p-4 mx-8 ml-auto">
+    <div class="p-4 mx-8 ml-auto inline-flex justify-center items-center text-sm">
         <div class="flex gap-4">
             <a class="transition hover:text-rose-600" routerLink="/home">Home</a>
-            <a class="transition hover:text-rose-600" routerLink="/map">AI Map</a>
             <a class="transition hover:text-rose-600" routerLink="/tools">Full List</a>
             <a class="transition hover:text-rose-600" routerLink="/categories">Categories</a>
         </div>
+        <div class="inline-flex ml-4 items-center">
+            <div class="overflow-hidden rounded-full mx-auto px-4 py-2 bg-rose-700 transition hover:bg-rose-800">
+                <a class="inline-flex h-full items-center justify-center" routerLink="/map">Explore the Map</a>
+            </div>
+        </div>
     </div>
 </nav>
+
