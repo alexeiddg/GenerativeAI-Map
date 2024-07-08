@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavComponent } from "../../shared/components/nav/nav.component";
+import { HeroComponent } from "../../shared/components/hero/hero.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavComponent],
+  imports: [HeroComponent],
   templateUrl: './home.component.html',
   styles: ``
 })

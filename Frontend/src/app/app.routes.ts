@@ -6,7 +6,7 @@ import { ToolsComponent } from "./pages/tools/tools.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
 
 export const routes: Routes = [
-    { path: 'home', component: HomeComponent },
+    { path: '', component: HomeComponent },
     { path: 'categories', component: CategoriesComponent },
     { path: 'map', component: MapComponent },
     { path: 'tools', component: ToolsComponent },
