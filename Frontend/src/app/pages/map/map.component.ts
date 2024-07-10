@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { AIMapComponent } from "../../features/components/ai-map/ai-map.component";
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [],
+  imports: [
+    AIMapComponent,
+  ],
   templateUrl: './map.component.html',
   styles: ``
 })

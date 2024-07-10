@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [],
+    imports: [
+    ],
   templateUrl: './categories.component.html',
   styles: ``
 })
