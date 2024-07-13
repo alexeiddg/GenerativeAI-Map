@@ -10,9 +10,7 @@ public class CategoryLink {
     }
 
     public String getCategoryName() { return categoryName; }
-    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
-
     public String getCategoryUrl() { return categoryUrl; }
-    public void setCategoryUrl(String categoryUrl) { this.categoryUrl = categoryUrl; }
+
 }
 

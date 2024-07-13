@@ -7,13 +7,14 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alexeiddg.backend.scraper.utils.CategoryLink;
-import com.alexeiddg.backend.scraper.AppConfig;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.alexeiddg.backend.scraper.utils.AITool;
+import com.alexeiddg.backend.scraper.utils.CategoryLink;
+import com.alexeiddg.backend.scraper.AppConfig;
 
 @Service
 public class HtmlParser {
@@ -40,5 +41,23 @@ public class HtmlParser {
         }
 
         return categoryLinks;
+    }
+
+    public List<AITool> parseHtmlForTools(String html, String category) {
+        List<AITool> aiTools = new ArrayList<>();
+        Document document = Jsoup.parse(html);
+
+        Elements toolElements = document.select("div.post-info");
+
+        for (Element toolElement : toolElements) {
+            String name = toolElement.select("span.post-title a").text();
+            String description = toolElement.select("p.post-excerpt").text();
+            String url = toolElement.select("span.post-title a").attr("href");
+            String rating = toolElement.select("div.kksr-legend").text().split("/")[0];
+
+            aiTools.add(new AITool(name, description, url, rating, category));
+        }
+
+        return aiTools;
     }
 }
