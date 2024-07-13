@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.alexeiddg.backend.scraper.AppConfig;
 import com.alexeiddg.backend.scraper.config.WebDriverFactory;
@@ -16,7 +15,6 @@ import com.alexeiddg.backend.scraper.WebsiteScraper;
 @Service
 public class WebScrapingService {
 
-    private static final Logger logger = Logger.getLogger(WebScrapingService.class.getName());
     private final HtmlParser htmlParser;
     private final AppConfig appConfig;
     private final BatchProcessingService batchProcessingService;
