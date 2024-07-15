@@ -21,6 +21,9 @@ public class AppConfig {
     @Value("${excluded.categories}")
     private String excludedCategories;
 
+    @Value("${user.agents}")
+    private String userAgents;
+
     public String getChromeDriverPath() { return chromeDriverPath; }
 
     public String getChromeBinaryPath() { return chromeBinaryPath; }
@@ -29,5 +32,9 @@ public class AppConfig {
 
     public List<String> getExcludedCategories() {
         return Arrays.asList(excludedCategories.split(","));
+    }
+
+    public List<String> getUserAgents() {
+        return Arrays.asList(userAgents.split(","));
     }
 }

@@ -22,6 +22,6 @@ public class WebScrapingController {
     @GetMapping("/api/scrape")
     public List<AITool> scrapeWebsite() {
         webScrapingService.scrapeAndProcess();
-        return webScrapingService.getScrapedTools(); // TEMP return
+        return webScrapingService.getScrapedTools();
     }
 }

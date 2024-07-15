@@ -39,7 +39,6 @@ public class HtmlParser {
                 categoryLinks.add(new CategoryLink(categoryName, categoryUrl));
             }
         }
-
         return categoryLinks;
     }
 
@@ -57,7 +56,6 @@ public class HtmlParser {
 
             aiTools.add(new AITool(name, description, url, rating, category));
         }
-
         return aiTools;
     }
 }

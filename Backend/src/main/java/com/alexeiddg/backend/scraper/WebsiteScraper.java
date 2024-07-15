@@ -44,7 +44,6 @@ public class WebsiteScraper {
                 }
             }
         }
-
         return categoryLinks;
     }
 
@@ -66,7 +65,6 @@ public class WebsiteScraper {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Exception occurred while scraping category page", e);
         }
-
         return aiTools;
     }
 }
