@@ -30,3 +30,5 @@ public class AITool {
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
 }
+
+// TODO: Check if the AITool class is complete and correct -- some methods are unused

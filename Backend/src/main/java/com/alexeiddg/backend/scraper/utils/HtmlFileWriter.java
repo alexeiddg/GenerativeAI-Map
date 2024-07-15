@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.alexeiddg.backend.annotations.PossiblyUnused;
+
+@PossiblyUnused
 public class HtmlFileWriter {
 
     private static final Logger logger = Logger.getLogger(HtmlFileWriter.class.getName());

@@ -22,8 +22,8 @@ public class BatchProcessingService {
     private static final Logger logger = Logger.getLogger(BatchProcessingService.class.getName());
     private final WebDriverFactory webDriverFactory;
     private final HtmlParser htmlParser;
-    private static final int MIN_DELAY_BETWEEN_REQUESTS_MS = 15000; // 15 seconds
-    private static final int MAX_DELAY_BETWEEN_REQUESTS_MS = 30000; // 30 seconds
+    private static final int MIN_DELAY_BETWEEN_REQUESTS_MS = 30000;
+    private static final int MAX_DELAY_BETWEEN_REQUESTS_MS = 60000;
 
     @Autowired
     public BatchProcessingService(WebDriverFactory webDriverFactory, HtmlParser htmlParser) {
@@ -33,28 +33,34 @@ public class BatchProcessingService {
 
     public List<AITool> scrapeToolsFromCategories(List<CategoryLink> categoryLinks) {
         List<AITool> aiTools = new ArrayList<>();
-        int limit = Math.min(categoryLinks.size(), 2); // Limit to first 2 pages for testing
+        int limit = Math.min(categoryLinks.size(), 1); // Limit to first 2 pages for testing
 
         for (int i = 0; i < limit; i++) {
             CategoryLink link = categoryLinks.get(i);
             WebDriver webDriver = webDriverFactory.createWebDriver();
             try {
-                logger.info("Starting scraping for category: " + link.getCategoryName() + " URL: " + link.getCategoryUrl());
-                List<AITool> tools = scrapeAllPagesInCategory(webDriver, link.getCategoryUrl(), link.getCategoryName());
+                logger.info("Starting scraping for category: " + link.categoryName() + " URL: " + link.categoryUrl());
+                List<AITool> tools = scrapeAllPagesInCategory(webDriver, link.categoryUrl(), link.categoryName());
                 if (tools != null) {
                     for (AITool tool : tools) {
-                        tool.setCategory(link.getCategoryName());
+                        tool.setCategory(link.categoryName());
                     }
                     aiTools.addAll(tools);
                 }
                 // Introduce a delay between requests
-                Thread.sleep(ThreadLocalRandom.current().nextInt(MIN_DELAY_BETWEEN_REQUESTS_MS, MAX_DELAY_BETWEEN_REQUESTS_MS + 1));
+                int delay = ThreadLocalRandom.current().nextInt(MIN_DELAY_BETWEEN_REQUESTS_MS, MAX_DELAY_BETWEEN_REQUESTS_MS + 1);
+                logger.info("Waiting for " + (delay / 1000) + " seconds before starting the next scrape.");
+                Thread.sleep(delay);
             } catch (InterruptedException e) {
                 logger.severe("Thread was interrupted: " + e.getMessage());
                 Thread.currentThread().interrupt(); // Restore the interrupted status
             } finally {
                 if (webDriver != null) {
-                    webDriver.quit();
+                    try {
+                        webDriver.quit();
+                    } catch (Exception e) {
+                        logger.severe("Exception occurred while quitting WebDriver: " + e.getMessage());
+                    }
                 }
             }
         }
@@ -91,7 +97,9 @@ public class BatchProcessingService {
                 }
 
                 // Introduce a delay between requests
-                Thread.sleep(ThreadLocalRandom.current().nextInt(MIN_DELAY_BETWEEN_REQUESTS_MS, MAX_DELAY_BETWEEN_REQUESTS_MS + 1));
+                int delay = ThreadLocalRandom.current().nextInt(MIN_DELAY_BETWEEN_REQUESTS_MS, MAX_DELAY_BETWEEN_REQUESTS_MS + 1);
+                logger.info("Waiting for " + (delay / 1000) + " seconds before scraping the next page.");
+                Thread.sleep(delay);
             } catch (InterruptedException e) {
                 logger.severe("Thread was interrupted: " + e.getMessage());
                 Thread.currentThread().interrupt(); // Restore the interrupted status
