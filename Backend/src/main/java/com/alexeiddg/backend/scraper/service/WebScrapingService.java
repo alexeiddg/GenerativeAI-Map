@@ -32,10 +32,10 @@ public class WebScrapingService {
         this.batchProcessingService = batchProcessingService;
     }
 
-    public void scrapeAndProcess() {
+    public void scrapeAndProcess(int categoryLimit, int pageLimit) {
         List<CategoryLink> categoryLinks = scrapeWebsite();
         if (categoryLinks != null) {
-            scrapedTools = batchProcessingService.scrapeToolsFromCategories(categoryLinks);
+            scrapedTools = batchProcessingService.scrapeToolsFromCategories(categoryLinks, categoryLimit, pageLimit);
             processAITools(scrapedTools);
         }
     }
