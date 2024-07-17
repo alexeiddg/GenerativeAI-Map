@@ -11,6 +11,7 @@ import com.alexeiddg.backend.scraper.config.WebDriverFactory;
 import com.alexeiddg.backend.scraper.utils.AITool;
 import com.alexeiddg.backend.scraper.utils.CategoryLink;
 import com.alexeiddg.backend.scraper.WebsiteScraper;
+import com.alexeiddg.backend.api.service.AIToolService;
 
 @Service
 public class WebScrapingService {
@@ -18,24 +19,26 @@ public class WebScrapingService {
     private final HtmlParser htmlParser;
     private final AppConfig appConfig;
     private final BatchProcessingService batchProcessingService;
-
-    private List<AITool> scrapedTools;
+    private final AIToolService aiToolService;
 
     @Autowired
     public WebScrapingService(
             HtmlParser htmlParser,
             AppConfig appConfig,
-            BatchProcessingService batchProcessingService
+            BatchProcessingService batchProcessingService,
+            AIToolService aiToolService
+
     ) {
         this.htmlParser = htmlParser;
         this.appConfig = appConfig;
         this.batchProcessingService = batchProcessingService;
+        this.aiToolService = aiToolService;
     }
 
     public void scrapeAndProcess(int categoryLimit, int pageLimit) {
         List<CategoryLink> categoryLinks = scrapeWebsite();
         if (categoryLinks != null) {
-            scrapedTools = batchProcessingService.scrapeToolsFromCategories(categoryLinks, categoryLimit, pageLimit);
+            List<AITool> scrapedTools = batchProcessingService.scrapeToolsFromCategories(categoryLinks, categoryLimit, pageLimit);
             processAITools(scrapedTools);
         }
     }
@@ -52,12 +55,6 @@ public class WebScrapingService {
     }
 
     private void processAITools(List<AITool> aiTools) {
-        // WIP
-    }
-
-    public List<AITool> getScrapedTools() {
-        return scrapedTools;
+        aiToolService.saveAITools(aiTools);
     }
 }
-
-// TODO: Process the scraped tools

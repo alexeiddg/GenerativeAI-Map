@@ -1,19 +1,29 @@
-package com.alexeiddg.backend.scraper.utils;
+package com.alexeiddg.backend.api.model;
 
-public class AITool {
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "ai_tools", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "url"})})
+public class AIToolModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(length = 5000)
     private String description;
+
+    @Column(nullable = false)
     private String url;
     private String rating;
     private String category;
 
-    public AITool(String name, String description, String url, String rating, String category) {
-        this.name = name;
-        this.description = description;
-        this.url = url;
-        this.rating = rating;
-        this.category = category;
-    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -21,7 +31,7 @@ public class AITool {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getUrl() { return url; }
+    public String getUrl() { return url;}
     public void setUrl(String url) { this.url = url; }
 
     public String getRating() { return rating; }
@@ -30,3 +40,4 @@ public class AITool {
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
 }
+
