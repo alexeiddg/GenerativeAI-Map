@@ -18,6 +18,6 @@ public class WebScrapingController {
 
     @PostMapping("/api/update")
     public void scrapeWebsite() {
-        webScrapingService.scrapeAndProcess(1, 3);
+        webScrapingService.scrapeAndProcess(60, 100);
     }
 }
