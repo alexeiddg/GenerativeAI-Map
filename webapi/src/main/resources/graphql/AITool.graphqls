@@ -1,0 +1,8 @@
+type Tool {
+    id: ID!
+    name: String!
+    description: String
+    url: String!
+    rating: String
+    category: String
+}
