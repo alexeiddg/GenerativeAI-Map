@@ -1,6 +1,51 @@
 # This is an example file for the configuration of the application when generating the spring boot application
+# The configurations Included show the configuration for the backend application and the web scraper used in the codebase
 spring.application.name=backend
+logging.level.org.springframework.core.env=DEBUG
+logging.level.org.springframework.boot.context.properties=DEBUG
+logging.level.org.springframework.web=DEBUG
 
 # For the web scraper add the chrome and chromedriver paths
 webdriver.chrome.driver=YOUR_PATH_TO_CHROMEDRIVER
 webdriver.chrome.binary=YOUR_PATH_TO_CHROME
+
+# Scraped Website URL & Excluded Categories for the case of this application
+website.url=YOUR_WEBSITE_URL
+# If needed to exclude categories from the web scraper
+excluded.categories=YOUR_EXCLUDED_CATEGORIES
+
+# Database configuration
+spring.datasource.url=YOUR_CONNECTION_STRING
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+spring.datasource.driverClassName=YOUR_DATABASE_DRIVER
+
+# Hibernate properties
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.properties.hibernate.connection.provider_disables_autocommit=false
+spring.jpa.show-sql=true
+
+# HikariCP properties
+spring.datasource.hikari.maximum-pool-size=30
+spring.datasource.hikari.minimum-idle=10
+spring.datasource.hikari.idle-timeout=30000
+spring.datasource.hikari.max-lifetime=1800000
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.leakDetectionThreshold=60000
+spring.datasource.hikari.dataSourceProperties.prepStmtCacheSize=250
+spring.datasource.hikari.dataSourceProperties.prepStmtCacheSqlLimit=2048
+spring.datasource.hikari.dataSourceProperties.cachePrepStmts=false
+spring.datasource.hikari.dataSourceProperties.useServerPrepStmts=false
+spring.datasource.hikari.dataSourceProperties.rewriteBatchedStatements=true
+spring.datasource.hikari.dataSourceProperties.prepareThreshold=0
+spring.datasource.hikari.auto-commit=false
+
+# Logging configuration
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+logging.level.com.zaxxer.hikari=DEBUG
+logging.level.com.zaxxer.hikari.pool=DEBUG
+logging.level.com.zaxxer.hikari.HikariConfig=DEBUG
+
+# List of User Agents to be used by the web scraper EXAMPLE !!!
+user.agents=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36,

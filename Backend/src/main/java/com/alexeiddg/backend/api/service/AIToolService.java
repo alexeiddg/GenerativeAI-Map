@@ -1,12 +1,12 @@
 package com.alexeiddg.backend.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexeiddg.backend.api.model.AIToolModel;
@@ -18,7 +18,8 @@ import com.alexeiddg.backend.scraper.utils.AIToolConverter;
 public class AIToolService {
 
     private static final Logger logger = Logger.getLogger(AIToolService.class.getName());
-    private AIToolRepository aiToolRepository;
+
+    private final AIToolRepository aiToolRepository;
 
     @Autowired
     public AIToolService(AIToolRepository aiToolRepository) {
@@ -32,17 +33,18 @@ public class AIToolService {
             try {
                 Optional<AIToolModel> existingTool = aiToolRepository.findByNameAndUrl(tool.getName(), tool.getUrl());
                 if (existingTool.isPresent()) {
-                    logger.info("Tool already exists: " + tool.getName() + " URL: " + tool.getUrl());
+                    AIToolModel existingModel = existingTool.get();
+                    existingModel.setCategory(model.getCategory());
+                    existingModel.setDescription(model.getDescription());
+                    existingModel.setRating(model.getRating());
+                    aiToolRepository.save(existingModel);
+                    logger.info("Successfully updated tool: " + tool.getName() + " URL: " + tool.getUrl());
                 } else {
                     aiToolRepository.save(model);
                     logger.info("Successfully saved tool: " + tool.getName() + " URL: " + tool.getUrl());
                 }
-            } catch (DataAccessException e) {
-                logger.warning("Database error while saving tool: " + tool.getName() + " URL: " + tool.getUrl() + " Error: " + e.getMessage());
-                continue; // Continue with the next tool
             } catch (Exception e) {
-                logger.warning("Error saving tool: " + tool.getName() + " URL: " + tool.getUrl() + " Error: " + e.getMessage());
-                continue; // Continue with the next tool
+                logger.log(Level.SEVERE, "Database error while saving tool: " + tool.getName() + " URL: " + tool.getUrl() + " Error: " + e.getMessage(), e);
             }
         }
     }
