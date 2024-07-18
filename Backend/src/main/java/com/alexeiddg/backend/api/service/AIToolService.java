@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -28,6 +29,9 @@ public class AIToolService {
 
     @Transactional
     public void saveAITools(List<AITool> aiTools) {
+        int batchSize = 13;
+        List<AIToolModel> batch = new ArrayList<>();
+
         for (AITool tool : aiTools) {
             AIToolModel model = AIToolConverter.toModel(tool);
             try {
@@ -37,15 +41,23 @@ public class AIToolService {
                     existingModel.setCategory(model.getCategory());
                     existingModel.setDescription(model.getDescription());
                     existingModel.setRating(model.getRating());
-                    aiToolRepository.save(existingModel);
-                    logger.info("Successfully updated tool: " + tool.getName() + " URL: " + tool.getUrl());
+                    batch.add(existingModel);
                 } else {
-                    aiToolRepository.save(model);
-                    logger.info("Successfully saved tool: " + tool.getName() + " URL: " + tool.getUrl());
+                    batch.add(model);
                 }
+
+                if (batch.size() == batchSize) {
+                    aiToolRepository.saveAll(batch);
+                    batch.clear();
+                }
+
             } catch (Exception e) {
-                logger.log(Level.SEVERE, "Database error while saving tool: " + tool.getName() + " URL: " + tool.getUrl() + " Error: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Database error while processing tool: " + tool.getName() + " URL: " + tool.getUrl() + " Error: " + e.getMessage(), e);
             }
+        }
+
+        if (!batch.isEmpty()) {
+            aiToolRepository.saveAll(batch);
         }
     }
 }
